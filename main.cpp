@@ -12,6 +12,7 @@ int sum();
 char fileName[200];
 Graph *grafo;
 
+/*
 void printAdj(int** adj, int nodes){
     printf("\n Matriz de adjacencias");
     for(int i=0;i< nodes; i++){
@@ -20,7 +21,9 @@ void printAdj(int** adj, int nodes){
             printf("%d|",adj[i][j]);
         }
     }
-}
+} */
+
+
 //-----------------------------------------------            
 int main(int argc, char *argv[]) 
 { 
@@ -37,10 +40,12 @@ int main(int argc, char *argv[])
     int nodes = grafo->getNumNodes();
 
     grafo->setListaAdj();
-
+    Graph::Adj_node** listaAdj = grafo->getListaAdj();
+    grafo->printListaAdj();
+    printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeListAdj(5));
     //grafo->setAdjMatrix();
     //int **adj = grafo->getAdjMatrix();
-    //printAdj(adj,nodes);
+    //grato->printAdj();//printAdj(adj,nodes);
     //printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeAdj(5));
     //print adj matrix
     
