@@ -34,11 +34,14 @@ int main(int argc, char *argv[])
     
    
     grafo = new Graph(fileName);
-    grafo->setAdjMatrix();
     int nodes = grafo->getNumNodes();
-    int **adj = grafo->getAdjMatrix();
-    printAdj(adj,nodes);
-    printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeAdj(5));
+
+    grafo->setListaAdj();
+
+    //grafo->setAdjMatrix();
+    //int **adj = grafo->getAdjMatrix();
+    //printAdj(adj,nodes);
+    //printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeAdj(5));
     //print adj matrix
     
     printf("\nFIM\n");

@@ -14,6 +14,16 @@ class Graph
     int **arcs; //alocar espaço quando for construir
     int **adjMatrix; //matriz de adjacencias
     int n_arcs,n_nodes,bool_weight;
+    
+
+    typedef struct Adj_node{
+        int node;
+        Adj_node *next_node;
+        int weight;
+    }Adj_node;
+
+    Adj_node **Adj_list_node; //lista de adjacencias
+
     char fileName[];
 
     int readFile(char file[])
@@ -128,6 +138,42 @@ class Graph
             degree+=this->adjMatrix[i][node-1];
         }
         return degree;
+    }
+
+    void setListaAdj(){
+        this->Adj_list_node = (Adj_node **)malloc(sizeof(Adj_node*) * this->getNumNodes());
+        
+        //adicionando primeiros nós na lista, como eh soh para referencia vamos adicionar o peso zero
+        for(int i =0; i<n_nodes; i++){
+            this->Adj_list_node[i] = (Adj_node *)malloc(sizeof(Adj_node*));
+            this->Adj_list_node[i]->node=i; //{.node = i, .next_node=NULL, .weight = 0};
+            this->Adj_list_node[i]->next_node=NULL;
+            this->Adj_list_node[i]->weight=0;
+        }
+
+        
+        int n1=0;
+        int n2=0;
+        int w=0;
+        Adj_node *dest;
+        Adj_node *aux;
+        
+        for(int i = 0; i < n_arcs; i++){
+            n1=this->arcs[i][0] -1; //passar a começar do zero para indice ser = noh
+            n2=this->arcs[i][1] -1;
+            w=this->arcs[i][2];
+            aux = this->Adj_list_node[n1];
+            
+            while(aux->next_node!=NULL){
+                aux = aux->next_node;
+            }
+            dest = (Adj_node *)malloc(sizeof(Adj_node*));
+            dest->node=n2;
+            dest->next_node=NULL;
+            dest->weight=w;
+            
+            aux->next_node = dest;
+        }
     }
 
     //void incidencia();
