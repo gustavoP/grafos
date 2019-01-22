@@ -37,21 +37,23 @@ int main(int argc, char *argv[])
     
    
     grafo = new Graph(fileName);
-    int nodes = grafo->getNumNodes();
+    //int nodes = grafo->getNumNodes();
 
-    grafo->setListaAdj();
-    Graph::Adj_node** listaAdj = grafo->getListaAdj();
-    grafo->printListaAdj();
-    printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeListAdj(5));
+    //grafo->setListaAdj();
+    //Graph::Adj_node** listaAdj = grafo->getListaAdj();
+    //grafo->printListaAdj();
+    //printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeListAdj(5));
     //grafo->setAdjMatrix();
     //int **adj = grafo->getAdjMatrix();
     //grato->printAdj();//printAdj(adj,nodes);
     //printf("\n grau do noh %d: %d\n",5,grafo->nodeDegreeAdj(5));
     //print adj matrix
     
+    
+    grafo->printFile();
     printf("\nFIM\n");
-    //grafo->printFile();
-
+    
+    //grafo->prim();
 
     return 0; 
 } 

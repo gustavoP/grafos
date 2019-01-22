@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <cstring>
 #include <fstream>
+#include <vector>
+#include <numeric>
 //#include "Graph.h"
 
 using namespace std;
@@ -51,7 +53,7 @@ class Graph
             exit(1); // terminate with error
         }
         int i=0;
-        fscanf(file, "%d %d %d", &n_nodes, &n_arcs, &bool_weight);
+        fscanf(file, "%d %d %d\n", &n_nodes, &n_arcs, &bool_weight);
 
         //alocando memória
         int col =3;// 3 colunas, [nó 1, nó 2, peso]
@@ -81,9 +83,9 @@ class Graph
     };
 
     void printFile(){
-        printf("\n n1|n2|peso : Grafo = %s \n",this->fileName);
+        printf("\nn1->n2|peso : Grafo = %s \n",this->fileName);
         for(int i=0; i<this->n_arcs;i++){
-            printf("|%d |%d |%d \n",this->arcs[i][0],this->arcs[i][1],this->arcs[i][2]);
+            printf("%d->%d |%d \n",this->arcs[i][0],this->arcs[i][1],this->arcs[i][2]);
         }
     };
 
@@ -240,5 +242,55 @@ class Graph
                 aux=aux->next_node;
             }
         }
+    }
+
+    void prim(){
+        //inicializando
+        printf("iniciando Prim \n");
+
+        //lista com os nós, começa no 1 sempre em ordem crescente.
+        vector<int> remainingNodes(this->n_nodes);
+        iota(remainingNodes.begin(), remainingNodes.end(), 1); //remainingNodes._M_impl._M_start[0]
+        printf("capacidade|size %d %d\n",remainingNodes.size(),remainingNodes.capacity());
+        //lista dos nós que já foram visitados, inicialmente vazio
+        vector<int> visitedNodes(this->n_nodes);
+        printf("capacidade|size %d %d\n",visitedNodes.size(),visitedNodes.capacity());
+        //duplicando lista de arcos.
+        //listArcs vector com os arcos, é utilizado vector pois é mais fácil de manipular
+        vector< vector<int>> listArcs(this->n_arcs, vector<int>(3)); //listArcs._M_impl._M_start[i]._M_impl._M_start[j]
+        for(int i = 0; i <this->n_arcs; i++){
+            listArcs[i][0] = this->arcs[i][0];
+            listArcs[i][1] = this->arcs[i][1];
+            listArcs[i][2] = this->arcs[i][2];
+        }
+        printf("capacidade|size %d %d\n",listArcs.size(),listArcs.capacity());
+        printf("capacidade|size %d %d\n",listArcs[0].size(),listArcs[0].capacity());
+        //alocando memória para resposta final, dimensão é a quantidade de nos-1 já que é uma árvore
+        int col =3;// 3 colunas, [nó 1, nó 2, peso]
+        int **mst = (int **)malloc(sizeof(int *) * n_nodes-1);
+        mst[0] = (int *)malloc(sizeof(int) * col * n_nodes-1); 
+        for(int i = 0; i < n_nodes-1; i++){
+            mst[i] = (*mst + col * i); //n_arcs
+        }
+
+        //alogoritmo
+        for(int i =0;i<remainingNodes.size();i++){
+            printf("%d|%d\n",i,remainingNodes[i]);
+        }
+        for(int i =0;i<visitedNodes.size();i++){
+            printf("%d|%d\n",i,visitedNodes[i]);
+        }
+        int i = 2;
+        visitedNodes.push_back(remainingNodes[i]);
+        remainingNodes.erase(remainingNodes.begin()+i);
+        printf("\n end\n");
+        for(int i =0;i<remainingNodes.size();i++){
+            printf("%d|%d\n",i,remainingNodes[i]);
+        }
+
+        for(int i =0;i<visitedNodes.size();i++){
+            printf("%d|%d\n",i,visitedNodes[i]);
+        }
+
     }
 };
